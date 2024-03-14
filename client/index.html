@@ -8,12 +8,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"
     integrity="sha512-Xm9qbB6Pu06k3PUwPj785dyTl6oHxgsv9nHp7ej7nCpAqGZT3OZpsELuCYX05DdonFpTlBpXMOxjavIAIUwr0w=="
     crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    <title>ChatApp</title>
+    <title>Chat App</title>
 </head>
 <body>
    <main>
+    <h1 class="heading"> Real Time Chat App </h1>
     <form class="join-form">
         <input type="text" id="name" maxlength="20" placeholder="Your Name" size="15" required>
+        <input type="text" id="room" placeholder="Chat Room" size="20" required>
         <button id="join" type="submit">
             Join
         </button>
@@ -21,12 +23,14 @@
     
     <ul class="chat-box"></ul>
 
-    <p class="users"></p>
+    <p class="active-users"></p>
+
+    <p class="active-rooms"></p>
 
     <p class="activity"></p>
 
 
-    <form class="messge-box">
+    <form class="messege-box">
         <input type="text" id="message" required  placeholder="Your message">
         <button type="submit">Send</button>
     </form>
