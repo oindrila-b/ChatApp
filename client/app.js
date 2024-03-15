@@ -1,7 +1,7 @@
 // Client side js
 
 // Create a socket connection in the server side port
-const socket = io('ws://localhost:3000')
+const socket = io('https://chat-app-uhfv.onrender.com')
 
 // DOM selectors for message, name and room value 
 const msgInput = document.querySelector('#message')
