@@ -52,15 +52,15 @@ socket.on('message', (data) => {
     const {name, text, time} = data
     const li = document.createElement('li')
     li.className = 'post'
-    if(name === nameInput.value) li.className = 'psot post--left'
-    if(name !== nameInput.value && name !== 'Admin') li.className = 'psot post--right'
+    if(name === nameInput.value) li.className = 'post post--right'
+    if(name !== nameInput.value && name !== 'Admin') li.className = 'post post--left'
     if(name !== 'Admin') {
+        console.log(name)
         li.innerHTML = `<div class="post__header ${name === nameInput.value ? 'post__header--user' :  'post__header--reply'}">
-        <span class="post__header--name>${name} </span>
-        <span class="post__header--time>${time} </span>
+        <span class="post__header--name">${name} </span>
+        <span class="post__header--time">${time} </span>
         </div>
-        <div class = "post__text">${text}</div>
-        `
+        <div class = "post__text">${text}</div>`
     } else {
         li.innerHTML = `<div class="post__text">${text}</div>`
     }
