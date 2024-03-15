@@ -27,19 +27,19 @@ const io = new Server(expressServer, {
     }
 })
 
-io.on('connection', socket => {
+io.on('connection', async (socket) => {
     console.log(`User ${socket.id} connected`)
 
     // send message to connected user
     socket.emit('message', buildMessage(ADMIN, "Welcome to Chat App!"))
 
 
-    socket.on('enterRoom', ({ name, room }) => {
+    socket.on('enterRoom', async({ name, room }) => {
 
         const prevRoom = getUser(socket.id)?.room
 
         if (prevRoom) {
-            socket.leave(prevRoom)
+            await socket.leave(prevRoom)
             io.to(prevRoom).emit('message', buildMessage(ADMIN, `${name} has left the room`))
         }
 
