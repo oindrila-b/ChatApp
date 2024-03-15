@@ -1,10 +1,14 @@
+// Client side js
+
+// Create a socket connection in the server side port
 const socket = io('ws://localhost:3000')
 
-
+// DOM selectors for message, name and room value 
 const msgInput = document.querySelector('#message')
 const nameInput = document.querySelector('#name')
 const chatRoom = document.querySelector('#room')
 
+// DOM selectors for activity, active users, active rooms and chat display 
 const activity  =  document.querySelector('.activity')
 const activeUsers  =  document.querySelector('.active-users')
 const activeRooms  =  document.querySelector('.active-rooms')
@@ -12,8 +16,10 @@ const chatDisplay  =  document.querySelector('.chat-box')
 
 
 
-
-
+/**
+ * The send message function emits a message event from the client side to the server side
+ * @param {Object} e 
+ */
 function sendMessage(e) {
     e.preventDefault()
     if (nameInput.value && msgInput.value && chatRoom.value) {
@@ -26,7 +32,10 @@ function sendMessage(e) {
     msgInput.focus()
 }
 
-
+/**
+ * This functions emits a enter room event to the server side
+ * @param {Object} e 
+ */
 function enterRoom(e){
     e.preventDefault()
     if(nameInput.value && chatRoom.value) {
@@ -37,16 +46,24 @@ function enterRoom(e){
     }
 }
 
+// DOM selection for messaging and room-joining events
+
 document.querySelector('.messege-box').addEventListener('submit', sendMessage)
 document.querySelector('.join-form').addEventListener('submit', enterRoom)
 
+// Event listener for user typing activity
 msgInput.addEventListener('keypress', () => {
     socket.emit('activity', nameInput.value)
 })
 
 
-
-
+/**
+ * Function to handle the message displaying logic in the chat display,
+ * Once the client receives the message from the server, it checks if the name is ADMIN or not.
+ * If the name is not Admin, based on the current user name, it diplays the message to the right,
+ *  otherwise to the left , indicating a differeny user.
+ * If the message is from the ADMIN user, it displays a full width message 
+ */
 socket.on('message', (data) => {
     activity.textContent = ''
     const {name, text, time} = data
@@ -70,9 +87,10 @@ socket.on('message', (data) => {
 } )
 
 
-
+/**
+ * On user activity event, emit user activity message
+ */
 let activityTimer 
-
 socket.on('activity', (name) => {
     activity.textContent = `${name} is typing ....`
 
@@ -84,16 +102,20 @@ socket.on('activity', (name) => {
     }, 3000)
 })
 
-
+// When the client side receives an active users event, call the showUsers method
 socket.on('activeUsers', ({ users }) => {
     showUsers(users)
 })
 
+// When the client side receives an active rooms event, call the showRooms method
 socket.on('activeRooms', ({ rooms }) => {
     showRooms(rooms)
 })
 
-
+/**
+ * Shows the list of active users in the current room
+ * @param {Object} users 
+ */
 function showUsers(users) {
     activeUsers.textContent = ''
     if (users) {
@@ -107,6 +129,10 @@ function showUsers(users) {
     }
 }
 
+/**
+ * Shows the list of active room to all users in the current room
+ * @param {Object} rooms 
+ */
 function showRooms(rooms) {
     activeRooms.textContent = ''
     if (rooms) {
