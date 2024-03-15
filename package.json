@@ -1,0 +1,11 @@
+{
+  "name": "chatapp",
+  "version": "1.0.0",
+  "description": "## ABOUT The chat application is a simple backend application built using socket-io and node js. A client side has been built using HTML, CSS and Vanilla JavaScript. The server runs on the port 3000.",
+  "main": "index.js",
+  "scripts": {
+    "start": "cd server && npm start"
+  },
+  "author": "",
+  "license": "ISC"
+}
